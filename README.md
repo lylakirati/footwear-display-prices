@@ -12,7 +12,7 @@ Entreprene. (2021, December 19). *Pricing strategies of nike.* The Strategy Watc
 ## Citation
 
 ```bibtex
-@misc{kirati-influence-max,
+@misc{footwear-display-price,
   author = {Chongkyung Kim and Lyla Kiratiwudhikul and Mina Lee and Tom Zhang},
   title = {The Effects of Footwear Product Displays on Prices},
   year = {2022},
