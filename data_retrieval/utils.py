@@ -24,8 +24,6 @@ class NikeProductCard:
         # "Sustainable Materials", "Launching in SNKRS", "Available in SNKRS", 
         # "Customize", etc.
         label_tag = self.card_tag.select_one('figure .product-card__info .product-card__messaging')
-        # if label_tag is None:
-        #     return ""
         return np.nan if label_tag is None else label_tag.text
 
     def get_title(self):
@@ -43,26 +41,18 @@ class NikeProductCard:
 
     def get_reduced_price(self):
         reduced_pricetag = self.card_tag.find(attrs = {'data-testid': 'product-price-reduced'})
-        # if reduced_pricetag is None:
-        #     return "" # full price (see get_price())
         return np.nan if reduced_pricetag is None else reduced_pricetag.text
 
     def get_price(self):
         pricetag = self.card_tag.find(attrs = {'data-testid': 'product-price'})
-        # if pricetag is None: # will result in N/A in dataframe 
-        #     return None
         return np.nan if pricetag is None else pricetag.text
 
     def get_description(self):
         description = self.soup.select_one('.description-preview p')
-        # if description is None:
-        #     return None
         return np.nan if description is None else description.text
 
     def get_colors(self):
         all_colors = self.soup.select('.colorway-images img')
-        # if all_colors is None:
-        #     return None
         return np.nan if all_colors is None else '; '.join([c.get('alt') for c in all_colors])
 
     def get_review_info(self):
@@ -85,7 +75,6 @@ class AdidasProductCard:
         self.soup = self.get_page()
         
     def get_url(self):
-        # url = tag.select_one(".glass-product-card__assets a").get('href')
         return self.card_tag.select_one(".glass-product-card__assets a").get('href')
 
     def get_page(self):
@@ -98,23 +87,17 @@ class AdidasProductCard:
         
     def get_title(self):
         title = self.card_tag.select_one(".glass-product-card__title")
-        # if title is None:
-        #     return None
         return np.nan if title is None else title.text
 
     def get_subtitle(self):
         # e.g. "Women's Originals", "Sportswear", "Men's Essentials", "Running" etc.
         subtitle = self.card_tag.select_one(".glass-product-card__category")
-        # if subtitle is None:
-        #     return None
         return np.nan if subtitle is None else subtitle.text
 
     def get_num_colors(self):
         # Number of colors
         # e.g. "2 Colors"
         num_colors = self.card_tag.select_one(".glass-product-card__label span")
-        # if num_colors is None:
-        #     return None
         return np.nan if num_colors is None else num_colors.text
 
     def get_prices(self):
@@ -127,8 +110,6 @@ class AdidasProductCard:
     def get_description(self):
         # some shoes don't have description
         description = self.soup.select_one("#navigation-target-description .gl-accordion__content p")
-        # if description is None:
-        #     return None
         return np.nan if description is None else description.text
 
     def get_details(self):
