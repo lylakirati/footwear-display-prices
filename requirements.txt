@@ -10,3 +10,4 @@ nltk
 xgboost
 eli5
 lightgbm
+bs4
