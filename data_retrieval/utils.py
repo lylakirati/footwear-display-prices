@@ -42,13 +42,13 @@ class NikeProductCard:
         return self.card_tag.select_one("figure .product-card__product-count").text
 
     def get_reduced_price(self):
-        reduced_pricetag = self.card_tag.find(attrs = {'data-test': 'product-price-reduced'})
+        reduced_pricetag = self.card_tag.find(attrs = {'data-testid': 'product-price-reduced'})
         # if reduced_pricetag is None:
         #     return "" # full price (see get_price())
         return np.nan if reduced_pricetag is None else reduced_pricetag.text
 
     def get_price(self):
-        pricetag = self.card_tag.find(attrs = {'data-test': 'product-price'})
+        pricetag = self.card_tag.find(attrs = {'data-testid': 'product-price'})
         # if pricetag is None: # will result in N/A in dataframe 
         #     return None
         return np.nan if pricetag is None else pricetag.text
@@ -80,6 +80,8 @@ class AdidasProductCard:
     def __init__(self, card_tag):
         self.card_tag = card_tag
         self.url = self.get_url() # href to the product page
+        if "adidas.com" not in self.url:
+            self.url = "https://www.adidas.com" + s['url']                
         self.soup = self.get_page()
         
     def get_url(self):
@@ -113,12 +115,15 @@ class AdidasProductCard:
         num_colors = self.card_tag.select_one(".glass-product-card__label span")
         # if num_colors is None:
         #     return None
-        return np.nan if num_colors is None num_colors.text
+        return np.nan if num_colors is None else num_colors.text
 
-    def get_price(self):
+    def get_prices(self):
         pricetag = self.card_tag.select(".gl-price-item")
-        return [p.text for p in pricetag] # [original, sale]
-
+        price_list = [p.text for p in pricetag] # [original, sale]
+        while len(price_list) < 2:
+            price_list.append(np.nan) # blow with missing values
+        return price_list # [original, sale]
+    
     def get_description(self):
         # some shoes don't have description
         description = self.soup.select_one("#navigation-target-description .gl-accordion__content p")
